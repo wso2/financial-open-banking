@@ -24,6 +24,7 @@ import com.wso2.openbanking.accelerator.common.util.ErrorConstants;
 import com.wso2.openbanking.accelerator.consent.extensions.common.ConsentException;
 import com.wso2.openbanking.accelerator.consent.extensions.common.ConsentExtensionConstants;
 import com.wso2.openbanking.accelerator.consent.extensions.common.ConsentExtensionUtils;
+import com.wso2.openbanking.accelerator.consent.extensions.common.ConsentServiceUtil;
 import com.wso2.openbanking.accelerator.consent.extensions.common.ResponseStatus;
 import com.wso2.openbanking.accelerator.consent.extensions.internal.ConsentExtensionsDataHolder;
 import com.wso2.openbanking.accelerator.consent.extensions.manage.model.ConsentManageData;
@@ -54,14 +55,15 @@ public class ConsentManageUtil {
     /**
      * Check whether valid Data object is provided.
      *
-     * @param initiation Data object in initiation payload
+     * @param requestbody Data object in initiation payload
      * @return whether the Data object is valid
      */
-    public static JSONObject validateInitiationDataBody(JSONObject initiation) {
+    public static JSONObject validateInitiationDataBody(JSONObject requestbody) {
         JSONObject validationResponse = new JSONObject();
 
-        if (!initiation.containsKey(ConsentExtensionConstants.DATA) || !(initiation.get(ConsentExtensionConstants.DATA)
-                instanceof JSONObject)) {
+        if (!requestbody.containsKey(ConsentExtensionConstants.DATA) || !(requestbody.
+                get(ConsentExtensionConstants.DATA)
+                instanceof JSONObject) || ((JSONObject) requestbody.get(ConsentExtensionConstants.DATA)).isEmpty()) {
             log.error(ErrorConstants.PAYLOAD_FORMAT_ERROR);
             return ConsentManageUtil.getValidationResponse(ErrorConstants.RESOURCE_INVALID_FORMAT,
                     ErrorConstants.PAYLOAD_FORMAT_ERROR, ErrorConstants.PATH_REQUEST_BODY);
@@ -320,8 +322,7 @@ public class ConsentManageUtil {
         Boolean shouldRevokeTokens;
         if (ConsentManageUtil.isConsentIdValid(consentId)) {
             try {
-
-                ConsentResource consentResource = ConsentExtensionsDataHolder.getInstance().getConsentCoreService()
+                ConsentResource consentResource = ConsentServiceUtil.getConsentService()
                         .getConsent(consentId, false);
 
                 if (!consentResource.getClientID().equals(consentManageData.getClientId())) {
@@ -497,7 +498,6 @@ public class ConsentManageUtil {
      */
     public static JSONObject getInitiationResponse(JSONObject response, DetailedConsentResource createdConsent,
                                                    ConsentManageData consentManageData, String type) {
-
         JSONObject dataObject = (JSONObject) response.get(ConsentExtensionConstants.DATA);
         dataObject.appendField(ConsentExtensionConstants.CONSENT_ID, createdConsent.getConsentID());
         dataObject.appendField("CreationDateTime", convertEpochDateTime(createdConsent.getCreatedTime()));
@@ -585,6 +585,9 @@ public class ConsentManageUtil {
         } else if (ConsentExtensionConstants.FUNDSCONFIRMATIONS.equals(type)) {
             baseUrl = (String) parser.getConfiguration().get(
                     ConsentExtensionConstants.COF_SELF_LINK);
+        } else if (ConsentExtensionConstants.VRP.equals(type)) {
+            baseUrl = (String) parser.getConfiguration().get(
+                    ConsentExtensionConstants.VRP_SELF_LINK);
         }
 
         String requestPath = consentManageData.getRequestPath();
@@ -621,4 +624,63 @@ public class ConsentManageUtil {
         }
     }
 
+    /**
+     * validate the periodiclimits in the payload  in VRP.
+     *
+     * @param limit
+     * @return
+     */
+//    public static boolean validatePeriodicAlignment(Object limit) {
+//        Object periodAlignment =limit.equals(ConsentExtensionConstants.PERIOD_ALIGNMENT);
+//
+//        return (ConsentExtensionConstants.CONSENT.equals(periodAlignment) ||
+//                ConsentExtensionConstants.CALENDER.equals(periodAlignment));
+//    }
+//    public static boolean validatePeriodicAlignment(Object limit) {
+//        Object periodAlignment = limit.equals(ConsentExtensionConstants.PERIOD_ALIGNMENT);
+//
+//        if (!VRPConsentRequestValidator.isValidString(periodAlignment)) {
+//            return false;
+//        } else {
+//            String periodAlignment1 = (String) periodAlignment;
+//
+//            // Check if periodType is empty
+//            if (periodAlignment1.isEmpty()) {
+//                return false;
+//            }
+//
+//            List<String> periodAlignments = Arrays.asList(
+//                    ConsentExtensionConstants.CONSENT,
+//                    ConsentExtensionConstants.CALENDER
+//            );
+//
+//            return periodAlignments.contains(periodAlignment1);
+//        }
+//
+//    }
+
+
+    /**
+     * method to validate periodic type in VRP.
+     *
+     * @param periodiclimit periodic type
+     * @return
+     */
+//    public static boolean validatePeriodicType(Object periodicLimit) {
+//        if (periodicLimit instanceof String && !((String) periodicLimit).isEmpty()) {
+//            String periodType = (String) periodicLimit;
+//
+//            List<String> validPeriodTypes = Arrays.asList(
+//                    ConsentExtensionConstants.DAY,
+//                    ConsentExtensionConstants.WEEK,
+//                    ConsentExtensionConstants.FORTNIGHT,
+//                    ConsentExtensionConstants.MONTH,
+//                    ConsentExtensionConstants.HALF_YEAR,
+//                    ConsentExtensionConstants.YEAR
+//            );
+//
+//            return validPeriodTypes.contains(periodType);
+//        }
+//        return false;
+//    }
 }

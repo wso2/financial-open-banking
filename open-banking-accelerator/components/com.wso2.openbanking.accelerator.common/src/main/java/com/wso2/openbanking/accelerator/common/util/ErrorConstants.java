@@ -15,6 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package com.wso2.openbanking.accelerator.common.util;
 
 /**
@@ -48,12 +49,33 @@ public class ErrorConstants {
 
     public static final String PATH_CREDIT_ACCOUNT_IDENTIFICATION = "Data.Initiation.CreditorAccount.Identification";
     public static final String PATH_CREDIT_ACCOUNT_SCHEME = "Data.Initiation.CreditorAccount.SchemeName";
-
     public static final String PATH_INVALID = "Request path invalid";
     public static final String PAYLOAD_INVALID = "Consent validation failed due to invalid initiation payload";
     public static final String NOT_JSON_OBJECT_ERROR = "Payload is not a JSON object";
     public static final String PAYLOAD_FORMAT_ERROR = "Request Payload is not in correct JSON format";
+    public static final String PAYLOAD_FORMAT_ERROR_VALID_TO_DATE = "Invalid valid_to_date parameter in the payload" +
+            "for valid to date";
+    public static final String PAYLOAD_FORMAT_ERROR_DEBTOR_ACC = "Request Payload is not in correct JSON " +
+            "format for debtor account";
+    public static final String PAYLOAD_FORMAT_ERROR_CREDITOR_ACC = "Request Payload is not in correct JSON " +
+            "format for creditor account";
+    public static final String PAYLOAD_FORMAT_ERROR_VALID_FROM_DATE = "Request Payload is not in correct JSON format" +
+            " for valid from date";
+    public static final String PAYLOAD_FORMAT_ERROR_PERIODIC_LIMITS = "Invalid periodic limits";
+    public static final String PAYLOAD_FORMAT_ERROR_MAXIMUM_INDIVIDUAL_AMOUNT = "Invalid maximum individual amount";
+
+    public static final String PAYLOAD_FORMAT_ERROR_MAXIMUM_INDIVIDUAL_CURRENCY = "Invalid maximum individual amount" +
+            "currency";
+    public static final String PAYLOAD_FORMAT_ERROR_INITIATION = "Request Payload is not in correct JSON format" +
+            " for initiation key";
+    public static final String PAYLOAD_FORMAT_ERROR_RISK = "Request Payload is not in correct JSON format" +
+            " for Risk key";
+    public static final String PAYLOAD_FORMAT_ERROR_CONTROL_PARAMETER = "Request Payload is not in correct JSON " +
+            "format for control parameter key";
     public static final String INVALID_REQ_PAYLOAD = "Invalid request payload";
+    public static final String INVALID_REQ_PAYLOAD_INITIATION = "Invalid request payload in initiation key";
+    public static final String INVALID_REQ_PAYLOAD_CONTROL_PARAMETERS = "Invalid request payload in " +
+            "control parameter key";
     public static final String MISSING_DEBTOR_ACC_SCHEME_NAME = "Mandatory parameter Debtor Account Scheme Name does " +
             "not exists";
     public static final String MISSING_DEBTOR_ACC_IDENTIFICATION = "Mandatory parameter Debtor Account Identification" +
@@ -108,6 +130,7 @@ public class ErrorConstants {
     public static final String PATH_CONSENT_ID = "Data.Initiation.Consent-id";
     public static final String PATH_DATA = "Data";
     public static final String PATH_INITIATION = "Data.Initiation";
+    public static final String PATH_CONTROL_PARAMETERS = "Data.ControlParameters";
     public static final String PATH_RISK = "Data.Risk";
     public static final String PATH_URL = "Data.Url";
     public static final String PATH_EXPIRATION_DATE = "Data.Expiration-Date";
@@ -210,6 +233,7 @@ public class ErrorConstants {
     public static final String RISK_MISMATCH = "RISK Does Not Match.:" + ErrorConstants.PATH_RISK;
     public static final String RISK_NOT_FOUND = "RISK is not found or empty in the request.:" +
             ErrorConstants.PATH_RISK;
+
     public static final String INVALID_URI_ERROR = "Path requested is invalid. :" + ErrorConstants.PATH_URL;
     public static final String COF_CONSENT_STATE_INVALID = "Confirmation of Funds validation failed due to invalid" +
             " consent state.:" + ErrorConstants.PATH_STATUS;
@@ -221,9 +245,62 @@ public class ErrorConstants {
             " retrieval request";
     public static final String INVALID_CONSENT_ID = "Invalid Consent Id found in the request";
     public static final String CONSENT_ID_NOT_FOUND = "Consent ID not available in consent data";
-
     public static final String FIELD_INVALID_DATE = "OB.Field.InvalidDate";
     public static final String EXPIRED_DATE_ERROR = "The ExpirationDateTime value has to be a future date.";
+    // VRP error constants
+    public static final String MAXIMUM_INDIVIDUAL_AMOUNT_IS_MISSING = "Mandatory parameter MaximumIndividualAmount" +
+            " Amount is missing in the payload.";
+    public static final String MAXIMUM_INDIVIDUAL_AMOUNT_CURRENCY_IS_MISSING = "Mandatory parameter" +
+            "Currency in MaximumIndividualAmount is missing in the payload";
+    public static final String INVALID_AMOUNT = "Missing required parameter Amount";
+    public static final String INVALID_CURRENCY = "Missing required parameter Currency";
+    public static final String INVALID_PERIOD_ALIGNMENT = "Invalid value for period alignment in PeriodicLimits";
+    public static final String MISSING_PERIOD_TYPE = "Missing required parameter Period type";
+    public static final String INVALID_VALID_TO_DATE = "Valid to Date specified in the request is invalid";
+
+    // new error constants
+
+    public static final String INVALID_INITIATION_PAYLOAD = "Consent validation failed due to invalid" +
+            " initiation payload";
+    public static final String INVALID_PARAMETER = "Parameter passed in is null , " +
+            "empty or not a JSONObject";
+    public static final String INVALID_CLIENT_ID_MATCH = "Consent validation failed due to client ID mismatch";
+    public static final String INVALID_PARAMETER_DEBTOR_ACC = "Parameter passed in is null , " +
+            "empty or not a JSONObject in debtor account";
+    public static final String INVALID_PARAMETER_CREDITOR_ACC = "Parameter passed in is null , " +
+            "empty or not a JSONObject in debtor account";
+    public static final String INVALID_PARAMETER_AMOUNT = "Parameter passed in is null , " +
+            "empty or not a JSONObject in amount";
+    public static final String INVALID_PARAMETER_INITIATION = "Parameter passed in is null , " +
+            "empty or not a JSONObject in initiation";
+    public static final String INVALID_PARAMETER_CONTROL_PARAMETERS = "Parameter passed in is null , " +
+            "empty or not a JSONObject in control parameter";
+    public static final String INVALID_PARAMETER_MAXIMUM_INDIVIDUAL_AMOUNT = "Parameter passed in is null , " +
+            "empty or not a JSONObject in maximum individual amount";
+    public static final String INVALID_DATE_TIME_FORMAT = "Date and Time is not in correct JSON " +
+            "ISO-8601 date-time format";
+    public static final String INVALID_PARAMETER_PERIODIC_LIMITS = "Parameter passed in is null , " +
+            "empty or not a JSONArray";
+    public static final String MISSING_PERIOD_LIMITS = "Mandatory parameter " +
+            "periodic limits is missing in the payload";
+
+    public static final String PATH_VALID_TO_DATE = "Data.ControlParameters.ValidToDateTime";
+    public static final String PATH_VALID_FROM_DATE = "Data.ControlParameters.ValidFromDateTime";
+    public static final String PATH_MAXIMUM_INDIVIDUAL_AMOUNT = "Data.ControlParameters.MaximumIndividualAmount";
+    public static final String PATH_MAXIMUM_INDIVIDUAL_AMOUNT_AMOUNT = "Data.ControlParameters." +
+            "MaximumIndividualAmount.Amount";
+    public static final String PATH_MAXIMUM_INDIVIDUAL_AMOUNT_CURRENCY = "Data.ControlParameters." +
+            "MaximumIndividualAmount.Currency";
+    public static final String PATH_PERIOD_LIMIT = "Data.ControlParameters.PeriodicLimits";
+    public static final String PATH_PERIOD_LIMIT_AMOUNT = "Data.ControlParameters.PeriodicLimits.Amount";
+    public static final String PATH_PERIOD_LIMIT_CURRENCY = "Data.ControlParameters.PeriodicLimits.Currency";
+    public static final String PATH_PERIOD_TYPE = "Data.ControlParameters.PeriodicLimits.PeriodType";
+    public static final String PATH_PERIOD_ALIGNMENT = "Data.ControlParameters.PeriodLimits.PeriodAlignment";
+    public static final String PERIODIC_LIMIT_CURRENCY_IS_MISSING =  "Mandatory parameter Currency in Periodic limits" +
+            " is missing in the payload";
+    public static final String MISSING_PERIOD_ALIGNMENT = "Missing periodic alignment";
+
+    public static final String INVALID_PARAMETER_MESSAGE = "Parameter '%s' passed in is null, empty, or not a %s";
 
 }
 
