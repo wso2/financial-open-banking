@@ -22,6 +22,7 @@ import {Link} from "react-router-dom";
 import {withdrawLang, lang} from "../specConfigs";
 import ADRLogo from "../images/ADRLogo.png";
 import moment from "moment";
+import { Download } from 'react-bootstrap-icons';
 import {specConfigurations} from "../specConfigs/specConfigurations";
 import {generatePDF, getExpireTimeFromConsent} from "../services/utils";
 
@@ -59,7 +60,8 @@ export const ProfileMain = ({consent, infoLabel, appicationName, logoURL}) => {
                 <div className="confirmLink">
                     <a id="confirmationReportLink" href="javascript:void(0);"
                        onClick={() => generatePDF(consent, appicationName, consentStatusLabel)}>
-                        {infoLabel.profile.confirmation}
+                        {`${infoLabel.profile.confirmation} `}
+                        <Download />
                     </a>
                 </div>
                 {consent.currentStatus.toLowerCase() ===
